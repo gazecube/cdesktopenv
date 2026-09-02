@@ -17,6 +17,9 @@ XCOMM platform:  $TOG: linux.cf /main/47 1998/04/17 11:32:51 mgreess $
 #define LinuxDistribution	DefaultLinuxDistribution
 /*
   Add "#define LinuxDistribution Linux<mumble>" to your site.def or host.def.
+  Architecture is detected from compiler/preprocessor machine symbols.
+  Currently recognized Linux machine architectures include i386, x86_64,
+  Alpha, and m68k.
   Currently only LinuxSuSE will be figured out automatically.
   Valid values are (from the list at www.linux.org in Oct. '97):
     LinuxUnknown    (0)
@@ -151,6 +154,17 @@ XCOMM binutils:  (LinuxBinUtilsMajorVersion)
 #endif
 #endif
 
+#ifdef x86_64Architecture
+#define OptimizedCDebugFlags	-O2
+#define LinuxMachineDefines	-D__x86_64__
+#define ServerOSDefines		XFree86ServerOSDefines -DDDXTIME
+#define ServerExtraDefines	-DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#if UseElfFormat
+#define HasPlugin		YES
+#define VendorHasX11R6_3libXext	YES
+#endif
+#endif /* x86_64Architecture */
+
 #ifdef i386Architecture
 #define OptimizedCDebugFlags	DefaultGcc2i386Opt
 #define LinuxMachineDefines	-D__i386__
@@ -173,8 +187,8 @@ XCOMM binutils:  (LinuxBinUtilsMajorVersion)
 #define OptimizedCDebugFlags	-O2
 #define LinuxMachineDefines	-D__mc68000__
 #define StandardCppDefines      -traditional StandardDefines
-#define ServerOSDefines         XFree86ServerOSDefines -DDDXTIME -DPART_NET
-#define ServerExtraDefines      -DGCCUSESGAS XFree86ServerDefines
+#define ServerOSDefines		XFree86ServerOSDefines -DDDXTIME -DPART_NET
+#define ServerExtraDefines	-DGCCUSESGAS XFree86ServerDefines
 #endif /* Mc68020Architecture */
 
 #define StandardDefines		-Dlinux LinuxMachineDefines LinuxSourceDefines
