@@ -404,6 +404,11 @@ XCOMM $TOG: Imake.cf /main/30 1998/04/28 13:55:25 barstow $
 # define MacroFile linux.cf
 # undef linux
 # define LinuxArchitecture
+# if defined(__x86_64__) || defined(__amd64__)
+#  define x86_64Architecture
+#  undef __x86_64__
+#  undef __amd64__
+# endif
 # ifdef i386
 #  define i386Architecture
 #  undef i386
