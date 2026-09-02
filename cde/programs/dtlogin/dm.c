@@ -35,7 +35,10 @@
 # include	<time.h>
 # include	<utime.h>
 # include	<pwd.h>
+
+#ifdef oldcode
 # include	<varargs.h>
+#endif
 
 #if defined (SYSV) || defined (SVR4)
 #ifndef F_TLOCK
